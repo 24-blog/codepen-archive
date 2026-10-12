@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>性犯罪の誤謬</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推論の誤謬図解</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #13131a;
+    --surface2: #1a1a24;
+    --border: #2a2a3a;
+    --gold: #c9a84c;
+    --gold-dim: #7a6030;
+    --red: #c0392b;
+    --red-dim: #5a1a13;
+    --green: #27ae60;
+    --green-dim: #143d28;
+    --text: #e8e4d8;
+    --text-dim: #888880;
+    --accent: #4a9eff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ─── ヘッダー ─── */
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.2rem auto 0;
+  }
+  .label-top {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  h1 {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* ─── 事実セクション ─── */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .fact-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.7rem 0.9rem;
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .fact-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+    min-width: 2.5rem;
+  }
+  .fact-val {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .fact-item.full { grid-column: 1 / -1; }
+  .fact-item.warning {
+    border-color: var(--gold-dim);
+    background: #1a1800;
+  }
+  .fact-item.warning .fact-val { color: var(--gold); }
+  .fact-item.result {
+    border-color: var(--accent);
+    background: #001828;
+  }
+  .fact-item.result .fact-val { color: var(--accent); font-weight: 600; }
+
+  /* ─── 区切り矢印 ─── */
+  .arrow-block {
+    text-align: center;
+    padding: 1.2rem 0 0.8rem;
+    position: relative;
+  }
+  .arrow-line {
+    width: 2px;
+    height: 28px;
+    background: linear-gradient(to bottom, var(--border), var(--red));
+    margin: 0 auto 0.3rem;
+  }
+  .arrow-head {
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 9px solid var(--red);
+    margin: 0 auto;
+  }
+  .arrow-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── 誤謬ボックス ─── */
+  .fallacy-block {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 6px;
+    padding: 1.2rem 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .fallacy-block::before {
+    content: '×';
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 3rem;
+    color: var(--red);
+    opacity: 0.15;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+  }
+  .fallacy-claim {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #f0c0b8;
+    margin-bottom: 0.6rem;
+    font-style: italic;
+  }
+  .fallacy-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 2px;
+    padding: 0.15rem 0.5rem;
+    text-transform: uppercase;
+  }
+
+  /* ─── 論理分解 ─── */
+  .logic-section {
+    margin-bottom: 2rem;
+  }
+  .logic-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 0.6rem;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .logic-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 0.6rem 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    text-transform: uppercase;
+  }
+  .logic-content {
+    flex: 1;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+  .logic-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.6rem 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-width: 4rem;
+    text-align: center;
+  }
+
+  .row-premise {
+    background: var(--surface);
+  }
+  .row-premise .logic-tag { background: #1e1e2e; color: var(--text-dim); }
+  .row-premise .logic-status { background: var(--red-dim); color: var(--red); }
+
+  .row-missing {
+    background: #1a1200;
+    border-color: var(--gold-dim);
+  }
+  .row-missing .logic-tag { background: #251d00; color: var(--gold-dim); }
+  .row-missing .logic-content { color: var(--gold); }
+  .row-missing .logic-status { background: #251d00; color: var(--gold); }
+
+  .row-conclusion {
+    background: var(--red-dim);
+    border-color: var(--red);
+  }
+  .row-conclusion .logic-tag { background: #3d0e09; color: var(--red); }
+  .row-conclusion .logic-content { color: #f0c0b8; }
+  .row-conclusion .logic-status { background: #3d0e09; color: var(--red); }
+
+  /* ─── 証明責任図 ─── */
+  .burden-section {
+    margin-bottom: 2rem;
+  }
+  .burden-bar-wrap {
+    margin: 0.8rem 0;
+  }
+  .burden-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .burden-track {
+    height: 10px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .burden-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1.2s ease;
+  }
+  .fill-zero { width: 3%; background: var(--red); }
+  .fill-full { width: 97%; background: var(--green); }
+  .fill-mid  { width: 40%; background: var(--gold); }
+
+  .burden-note {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-top: 0.4rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid var(--border);
+  }
+
+  /* ─── 導けること / 導けないこと ─── */
+  .can-cannot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .can-box, .cannot-box {
+    border-radius: 5px;
+    padding: 1rem 0.9rem;
+    border: 1px solid;
+  }
+  .can-box {
+    background: var(--green-dim);
+    border-color: var(--green);
+  }
+  .cannot-box {
+    background: var(--red-dim);
+    border-color: var(--red);
+  }
+  .box-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .can-box .box-title { color: var(--green); }
+  .cannot-box .box-title { color: var(--red); }
+  .box-item {
+    font-size: 0.73rem;
+    line-height: 1.55;
+    padding: 0.3rem 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .box-item:first-of-type { border-top: none; }
+
+  /* ─── 同型誤謬 ─── */
+  .analogy-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 2rem;
+  }
+  .analogy-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .analogy-pair {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: 0.4rem;
+  }
+  .analogy-icon {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.1rem;
+  }
+  .analogy-text {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+  .analogy-text strong { color: var(--text); }
+
+  /* ─── フッター命題 ─── */
+  .proposition {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.1rem 1rem;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+  .proposition strong { color: var(--gold); font-weight: 600; }
+
+  /* ─── アニメーション ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.5s ease both; }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; }
+  .d4 { animation-delay: 0.55s; }
+  .d5 { animation-delay: 0.7s; }
+  .d6 { animation-delay: 0.85s; }
+
+  @media (max-width: 480px) {
+    .facts-grid { grid-template-columns: 1fr; }
+    .can-cannot { grid-template-columns: 1fr; }
+    .fact-item.full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="animate d1">
+  <div class="label-top">logical analysis</div>
+  <h1>「不起訴でも加害はあった」論の推論構造と誤謬</h1>
+</header>
+
+<!-- 事実の記載 -->
+<div class="animate d1" style="margin-bottom:2rem;">
+  <div class="section-title">記録された客観的事実</div>
+  <div class="facts-grid">
+    <div class="fact-item">
+      <span class="fact-key">いつ</span>
+      <span class="fact-val">14日未明（2時〜4時半頃）</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">どこ</span>
+      <span class="fact-val">文京区湯島のホテル</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">誰が</span>
+      <span class="fact-val">佐野海舟氏（他2名）</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">何を</span>
+      <span class="fact-val">30代女性に性的暴行をしたとして</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">管轄</span>
+      <span class="fact-val">警視庁本富士署</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">嫌疑</span>
+      <span class="fact-val">不同意性交等罪</span>
+    </div>
+    <div class="fact-item">
+      <span class="fact-key">認否</span>
+      <span class="fact-val">警察による公表なし</span>
+    </div>
+    <div class="fact-item warning">
+      <span class="fact-key">態様</span>
+      <span class="fact-val">被害申告者証言による　※ 証言 ≠ 事実</span>
+    </div>
+    <div class="fact-item result full">
+      <span class="fact-key">結果</span>
+      <span class="fact-val">不　起　訴</span>
+    </div>
+  </div>
+</div>
+
+<!-- 誤謬の主張 -->
+<div class="animate d2">
+  <div class="section-title">批判者の主張（問題とする推論）</div>
+  <div class="fallacy-block">
+    <div class="fallacy-claim">
+      「不起訴とは法的要件を満たさなかっただけのことであり、実際に性加害があったことは否定されていない。よって佐野氏への非難は正当である。」
+    </div>
+    <span class="fallacy-tag">要検証の推論</span>
+  </div>
+</div>
+
+<!-- 矢印 -->
+<div class="arrow-block animate d2">
+  <div class="arrow-line"></div>
+  <div class="arrow-head"></div>
+  <div class="arrow-label">論理を分解する</div>
+</div>
+
+<!-- 論理構造の分解 -->
+<div class="logic-section animate d3">
+  <div class="section-title">推論の前提と結論の検証</div>
+
+  <div class="logic-row row-premise">
+    <div class="logic-tag">前提①</div>
+    <div class="logic-content">女性が性的暴行を申告した</div>
+    <div class="logic-status">事実✓<br><span style="font-size:0.5rem;color:#888">（申告の存在）</span></div>
+  </div>
+
+  <div class="logic-row row-missing">
+    <div class="logic-tag">前提②</div>
+    <div class="logic-content">申告の内容は真である<br>
+      <span style="font-size:0.68rem;opacity:0.7">← この前提が成立しているか？　認否未公表・証拠不明（証言証拠のみ）</span>
+    </div>
+    <div class="logic-status">未確立<br><span style="font-size:0.5rem;">⚠ 欠落</span></div>
+  </div>
+
+  <div class="logic-row row-premise">
+    <div class="logic-tag">前提③</div>
+    <div class="logic-content">不起訴＝「加害なし」の証明ではない</div>
+    <div class="logic-status">事実✓<br><span style="font-size:0.5rem;color:#888">（正しい）</span></div>
+  </div>
+
+  <div class="logic-row row-conclusion">
+    <div class="logic-tag">結論</div>
+    <div class="logic-content">∴ 性加害があった</div>
+    <div class="logic-status">導出不可<br><span style="font-size:0.5rem;">×</span></div>
+  </div>
+</div>
+
+<!-- 証明責任 -->
+<div class="burden-section animate d4">
+  <div class="section-title">証明責任の所在</div>
+
+  <div class="burden-bar-wrap">
+    <div class="burden-label">
+      <span>「加害があった」を主張する側の立証責任</span>
+      <span style="color:var(--red)">果たされていない</span>
+    </div>
+    <div class="burden-track"><div class="burden-fill fill-zero"></div></div>
+    <div class="burden-note">積極的命題（加害の存在）は、主張する側が証拠をもって立証しなければならない。申告の存在は立証に当たらない。</div>
+  </div>
+
+  <div class="burden-bar-wrap">
+    <div class="burden-label">
+      <span>「不起訴＝完全な無実の証明」という誤解</span>
+      <span style="color:var(--text-dim)">これも誤り</span>
+    </div>
+    <div class="burden-track"><div class="burden-fill fill-mid"></div></div>
+    <div class="burden-note">不起訴は「嫌疑なし／不十分／起訴猶予」のいずれかであり、加害の有無について確定的判断を示さない。ただしそれは「加害あり」を意味しない。</div>
+  </div>
+
+</div>
+
+<!-- 導けること・導けないこと -->
+<div class="can-cannot animate d4">
+  <div class="can-box">
+    <div class="box-title">✓ このセットから導けること</div>
+    <div class="box-item">申告が行われた事実</div>
+    <div class="box-item">警察が不同意性交等罪で捜査した事実</div>
+    <div class="box-item">検察が不起訴判断した事実</div>
+  </div>
+  <div class="cannot-box">
+    <div class="box-title">× 導けないこと</div>
+    <div class="box-item">性加害が実際に存在したこと</div>
+    <div class="box-item">申告内容が真実であること</div>
+    <div class="box-item">不起訴理由（不起訴判断の内実）</div>
+  </div>
+</div>
+
+<!-- 同型誤謬 -->
+<div class="analogy-box animate d5">
+  <div class="analogy-title">同型の論理構造（比較）</div>
+  <div class="analogy-pair">
+    <span class="analogy-icon">①</span>
+    <span class="analogy-text">
+      <strong>「悪魔は存在する。科学が否定できていないのだから」</strong><br>
+      — 「否定されていない」≠「存在が証明された」
+    </span>
+  </div>
+  <div class="analogy-pair">
+    <span class="analogy-icon">②</span>
+    <span class="analogy-text">
+      <strong>「あの人は犯人だ。無罪判決が出ていないのだから」</strong><br>
+      — 無罪推定原則の実質的破壊と同構造
+    </span>
+  </div>
+  <div class="analogy-pair">
+    <span class="analogy-icon">③</span>
+    <span class="analogy-text">
+      <strong>今回の論理：「加害があった。法的に証明されなかっただけだ」</strong><br>
+      — 証明されていない命題を、否定の困難さで肯定する誤謬
+    </span>
+  </div>
+</div>
+
+<!-- 結語命題 -->
+<div class="proposition animate d6">
+  <strong>申告があったこと</strong>と<strong>加害があったこと</strong>は、論理的に独立した命題である。「不起訴は加害なしの証明ではない」という正しい命題から、「加害があった」という積極的命題を導くことは<strong>証明責任の転倒</strong>であり、申告さえあれば誰でも社会的に有罪とできる論理は、<strong>無罪推定の実質的無効化</strong>に帰結する。
+</div>
+
+</body>
+</html>
+    
+  </body>
+  
+</html>

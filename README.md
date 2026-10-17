@@ -1,6 +1,3 @@
-[![License](https://img.shields.io/badge/license-MIT-greeeen)](LICENSE)
-
-
 移動中‥
 
 | Folder | Title | 

@@ -1,7 +1,7 @@
 ### CodePen → Github
-| Moving‥ | Completed | 
+| Folder | Moving / Completed | 
 | :--- | :--- | 
-| veymybx | 性犯罪の誤謬 | 
+| veymybx | ○性犯罪の誤謬 | 
 
 
 ### For Myself
